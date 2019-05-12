@@ -13,6 +13,25 @@ namespace GrandChess
 {
     public partial class mainWindow : Form
     {
+        readonly Dictionary<string, string> piecePaths = new Dictionary<string, string>
+        {
+            {"br" , @"Assets/ChessPieces/BlackRook.png"},
+            {"bkn", @"Assets/ChessPieces/BlackKnight.png"},
+            {"bb" , @"Assets/ChessPieces/BlackBishop.png"},
+            {"bq" , @"Assets/ChessPieces/BlackQueen.png"},
+            {"bk" , @"Assets/ChessPieces/BlackKing.png"},
+            {"bm" , @"Assets/ChessPieces/BlackMarshall.png"},
+            {"bc" , @"Assets/ChessPieces/BlackCardinal.png"},
+            {"bp" , @"Assets/ChessPieces/BlackPawn.png"},
+            {"wr" , @"Assets/ChessPieces/WhiteRook.png"},
+            {"wkn", @"Assets/ChessPieces/WhiteKnight.png"},
+            {"wb" , @"Assets/ChessPieces/WhiteBishop.png"},
+            {"wq" , @"Assets/ChessPieces/WhiteQueen.png"},
+            {"wk" , @"Assets/ChessPieces/WhiteKing.png"},
+            {"wm" , @"Assets/ChessPieces/WhiteMarshall.png"},
+            {"wc" , @"Assets/ChessPieces/WhiteCardinal.png"},
+            {"wp" , @"Assets/ChessPieces/WhitePawn.png"}
+        };
         public mainWindow()
         {
             InitializeComponent();
@@ -24,43 +43,28 @@ namespace GrandChess
             int squareSize = chessBoardPanel.Size.Height / 10;
             for (int i = 0; i < 100; i++)
             {
-                int row = i / 10;
-                int column = i % 10;
-
-                PictureBox square = new PictureBox()
-                {
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Size = new Size(squareSize, squareSize),
-                    BackColor = ((row + column) % 2 == 0 ? Color.White : Color.DimGray),
-                    Location = new Point(column * squareSize, row * squareSize)
-                };
-
+                PictureBox square = CreateSquare(squareSize, i);
                 chessBoardPanel.Controls.Add(square);
             }
         }
 
+        private static PictureBox CreateSquare(int squareSize, int i)
+        {
+            int row = i / 10;
+            int column = i % 10;
+
+            PictureBox square = new PictureBox()
+            {
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Size = new Size(squareSize, squareSize),
+                BackColor = ((row + column) % 2 == 0 ? Color.White : Color.DimGray),
+                Location = new Point(column * squareSize, row * squareSize)
+            };
+            return square;
+        }
+
         private void NewGame(object sender, EventArgs e)
         {
-            Dictionary<string, string> piecePaths = new Dictionary<string, string>
-            {
-                {"br" , @"Assets/ChessPieces/BlackRook.png"},
-                {"bkn", @"Assets/ChessPieces/BlackKnight.png"},
-                {"bb" , @"Assets/ChessPieces/BlackBishop.png"},
-                {"bq" , @"Assets/ChessPieces/BlackQueen.png"},
-                {"bk" , @"Assets/ChessPieces/BlackKing.png"},
-                {"bm" , @"Assets/ChessPieces/BlackMarshall.png"},
-                {"bc" , @"Assets/ChessPieces/BlackCardinal.png"},
-                {"bp" , @"Assets/ChessPieces/BlackPawn.png"},
-                {"wr" , @"Assets/ChessPieces/WhiteRook.png"},
-                {"wkn", @"Assets/ChessPieces/WhiteKnight.png"},
-                {"wb" , @"Assets/ChessPieces/WhiteBishop.png"},
-                {"wq" , @"Assets/ChessPieces/WhiteQueen.png"},
-                {"wk" , @"Assets/ChessPieces/WhiteKing.png"},
-                {"wm" , @"Assets/ChessPieces/WhiteMarshall.png"},
-                {"wc" , @"Assets/ChessPieces/WhiteCardinal.png"},
-                {"wp" , @"Assets/ChessPieces/WhitePawn.png"}
-            };
-
             string[] rows = File.ReadAllLines(@"../../Assets/InitialSetup.txt");
             List<string> pieces = new List<string>();
             for (int i = 0; i < 10; i++)

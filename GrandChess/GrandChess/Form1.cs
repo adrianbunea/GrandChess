@@ -48,6 +48,20 @@ namespace GrandChess
             }
         }
 
+        private void NewGame(object sender, EventArgs e)
+        {
+            List<string> pieces = ReadInitialSetup();
+
+            foreach (PictureBox square in chessBoardPanel.Controls)
+            {
+                string key = pieces[chessBoardPanel.Controls.IndexOf(square)];
+                if (key != "0")
+                {
+                    square.Image = Image.FromFile(piecePaths[key]);
+                }
+            }
+        }
+
         private static PictureBox CreateSquare(int squareSize, int i)
         {
             int row = i / 10;
@@ -63,7 +77,7 @@ namespace GrandChess
             return square;
         }
 
-        private void NewGame(object sender, EventArgs e)
+        private static List<string> ReadInitialSetup()
         {
             string[] rows = File.ReadAllLines(@"../../Assets/InitialSetup.txt");
             List<string> pieces = new List<string>();
@@ -77,14 +91,7 @@ namespace GrandChess
                 pieces[i] = pieces[i].Trim();
             }
 
-            foreach (PictureBox square in chessBoardPanel.Controls)
-            {
-                string key = pieces[chessBoardPanel.Controls.IndexOf(square)];
-                if (key != "0")
-                {
-                    square.Image = Image.FromFile(piecePaths[key]);
-                }
-            }
+            return pieces;
         }
     }
 }

@@ -37,6 +37,7 @@
             // chessBoardPanel
             // 
             this.chessBoardPanel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chessBoardPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.chessBoardPanel.Location = new System.Drawing.Point(30, 100);
             this.chessBoardPanel.Margin = new System.Windows.Forms.Padding(20);
             this.chessBoardPanel.Name = "chessBoardPanel";

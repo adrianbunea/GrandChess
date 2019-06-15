@@ -8,31 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GrandChess.Classes;
 
 namespace GrandChess
 {
-    public partial class mainWindow : Form
+    public partial class MainWindow : Form
     {
-        readonly Dictionary<string, string> piecePaths = new Dictionary<string, string>
-        {
-            {"br" , @"Assets/ChessPieces/BlackRook.png"},
-            {"bkn", @"Assets/ChessPieces/BlackKnight.png"},
-            {"bb" , @"Assets/ChessPieces/BlackBishop.png"},
-            {"bq" , @"Assets/ChessPieces/BlackQueen.png"},
-            {"bk" , @"Assets/ChessPieces/BlackKing.png"},
-            {"bm" , @"Assets/ChessPieces/BlackMarshall.png"},
-            {"bc" , @"Assets/ChessPieces/BlackCardinal.png"},
-            {"bp" , @"Assets/ChessPieces/BlackPawn.png"},
-            {"wr" , @"Assets/ChessPieces/WhiteRook.png"},
-            {"wkn", @"Assets/ChessPieces/WhiteKnight.png"},
-            {"wb" , @"Assets/ChessPieces/WhiteBishop.png"},
-            {"wq" , @"Assets/ChessPieces/WhiteQueen.png"},
-            {"wk" , @"Assets/ChessPieces/WhiteKing.png"},
-            {"wm" , @"Assets/ChessPieces/WhiteMarshall.png"},
-            {"wc" , @"Assets/ChessPieces/WhiteCardinal.png"},
-            {"wp" , @"Assets/ChessPieces/WhitePawn.png"}
-        };
-        public mainWindow()
+        Board board;
+
+        public MainWindow()
         {
             InitializeComponent();
             CreateBoard();
@@ -51,31 +35,33 @@ namespace GrandChess
         private void NewGame(object sender, EventArgs e)
         {
             List<string> piecesCodifications = ReadInitialSetup();
+            PieceFactory pieceFactory = new PieceFactory();
+            board = new Board();
 
-            //List<Piece> pieces = new List<Piece>();
-            Board board = new Board();
-
-            for (int i = 0; i < 10; i++)
+            for (int y = 0; y < 10; y++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int x = 0; x < 10; x++)
                 {
-                    string key = piecesCodifications[i * 10 + j];
-                    if (key != "0")
+                    string pieceCodification = piecesCodifications[y * 10 + x];
+                    Point position = new Point(x, y);
+                    board.squares[y, x] = new Square(pieceFactory.CreatePiece(pieceCodification, position));
+
+                    if (board.squares[y, x].piece != null)
                     {
-                        //board.squares[i, j].piece = new Pawn();
-                        //board.squares[i, j].piece.image = Image.FromFile(piecePaths[key]);
+                        ((PictureBox)chessBoardPanel.Controls[y * 10 + x]).Image = board.squares[y, x].piece.Image;
                     }
+                    //board.squares[i, j].piece.image = Image.FromFile(piecePaths[key]);
                 }
             }
 
-            foreach (PictureBox square in chessBoardPanel.Controls)
-            {
-                string key = piecesCodifications[chessBoardPanel.Controls.IndexOf(square)];
-                if (key != "0")
-                {
-                    square.Image = Image.FromFile(piecePaths[key]);
-                }
-            }
+            //foreach (PictureBox square in chessBoardPanel.Controls)
+            //{
+            //    string key = piecesCodifications[chessBoardPanel.Controls.IndexOf(square)];
+            //    if (key != "0")
+            //    {
+            //        square.Image = Image.FromFile(piecePaths[key]);
+            //    }
+            //}
         }
 
         private static PictureBox CreateSquare(int squareSize, int i)

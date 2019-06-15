@@ -14,9 +14,11 @@ namespace GrandChess.Classes.Pieces
             return new List<Point>();
         }
 
-        public Bishop(PieceColor pieceColor) : base(pieceColor)
+        public Bishop(PieceColor pieceColor, Point position) : base(pieceColor, position)
         {
-
+            Image = Image.FromFile(pieceColor == PieceColor.White ?
+                 @"Assets/ChessPieces/WhiteBishop.png" :
+                 @"Assets/ChessPieces/BlackBishop.png");
         }
     }
 }

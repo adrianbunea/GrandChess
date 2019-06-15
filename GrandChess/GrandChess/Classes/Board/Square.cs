@@ -13,7 +13,7 @@ namespace GrandChess
         public bool available;
         public Piece piece;
 
-        public Square(Piece piece = null)
+        public Square(Piece piece)
         {
             this.piece = piece;
         }

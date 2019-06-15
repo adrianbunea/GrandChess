@@ -14,9 +14,11 @@ namespace GrandChess.Classes.Pieces
             return new List<Point>();
         }
 
-        public Knight(PieceColor pieceColor) : base(pieceColor)
+        public Knight(PieceColor pieceColor, Point position) : base(pieceColor, position)
         {
-
+            Image = Image.FromFile(pieceColor == PieceColor.White ?
+                 @"Assets/ChessPieces/WhiteKnight.png" :
+                 @"Assets/ChessPieces/BlackKnight.png");
         }
 
     }

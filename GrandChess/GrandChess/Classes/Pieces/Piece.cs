@@ -15,10 +15,9 @@ namespace GrandChess
 {
     abstract class Piece
     {
-        protected Point position;
-        protected Image image;
         public PieceColor pieceColor;
-        protected abstract List<Point> PossibleMoves();
+        protected Point position;
+        public Image Image { get; protected set; }
 
         public void TryMove(Point destination)
         {
@@ -33,9 +32,12 @@ namespace GrandChess
             position.Y = destination.Y;
         }
 
-        public Piece(PieceColor pieceColor)
+        protected abstract List<Point> PossibleMoves();
+
+        public Piece(PieceColor pieceColor, Point position)
         {
             this.pieceColor = pieceColor;
+            this.position = position;
         }
     }
 }

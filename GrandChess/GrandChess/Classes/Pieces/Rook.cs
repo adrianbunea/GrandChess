@@ -14,9 +14,11 @@ namespace GrandChess.Classes.Pieces
             return new List<Point>();
         }
 
-        public Rook(PieceColor pieceColor) : base(pieceColor)
+        public Rook(PieceColor pieceColor, Point position) : base(pieceColor, position)
         {
-
+            Image = Image.FromFile(pieceColor == PieceColor.White ? 
+                 @"Assets/ChessPieces/WhiteRook.png" : 
+                 @"Assets/ChessPieces/BlackRook.png");
         }
 
     }

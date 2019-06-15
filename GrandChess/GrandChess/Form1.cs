@@ -50,11 +50,27 @@ namespace GrandChess
 
         private void NewGame(object sender, EventArgs e)
         {
-            List<string> pieces = ReadInitialSetup();
+            List<string> piecesCodifications = ReadInitialSetup();
+
+            //List<Piece> pieces = new List<Piece>();
+            Board board = new Board();
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    string key = piecesCodifications[i * 10 + j];
+                    if (key != "0")
+                    {
+                        //board.squares[i, j].piece = new Pawn();
+                        //board.squares[i, j].piece.image = Image.FromFile(piecePaths[key]);
+                    }
+                }
+            }
 
             foreach (PictureBox square in chessBoardPanel.Controls)
             {
-                string key = pieces[chessBoardPanel.Controls.IndexOf(square)];
+                string key = piecesCodifications[chessBoardPanel.Controls.IndexOf(square)];
                 if (key != "0")
                 {
                     square.Image = Image.FromFile(piecePaths[key]);

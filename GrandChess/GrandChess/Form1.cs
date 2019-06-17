@@ -15,12 +15,9 @@ namespace GrandChess
     public partial class MainWindow : Form
     {
         Board board;
-        Board oldBoard;
-        Square selectedSquare;
-        Piece selectedPiece;
 
-        int fromSquare = -1;
-        int toSquare = -1;
+        int originSquare = -1;
+        int destinationSquare = -1;
 
         readonly Color POSSIBLE_DESTINATION_COLOR = Color.PaleGreen;
         readonly Color SELECTED_PIECE_COLOR = Color.Crimson;
@@ -49,7 +46,7 @@ namespace GrandChess
         private void NewGame(object sender, EventArgs e)
         {
             ResetColors();
-            selectedSquare = null;
+            originSquare = -1;
             List<string> piecesCodifications = ReadInitialSetup();
             PieceFactory pieceFactory = new PieceFactory();
             board = new Board();
@@ -89,18 +86,15 @@ namespace GrandChess
         private void SquareClick(object sender, EventArgs e)
         {
             PictureBox squarePictureBox = sender as PictureBox;
-            Point squarePosition = XYPosition(chessBoardPanel.Controls.IndexOf(squarePictureBox));
+            int pictureBoxIndex = chessBoardPanel.Controls.IndexOf(squarePictureBox);
+            Point squarePosition = XYPosition(pictureBoxIndex);
+
             Square clickedSquare = board.squares[squarePosition.Y, squarePosition.X];
-            Piece clickedPiece = board.squares[squarePosition.Y, squarePosition.X].piece;
             
-            if (selectedSquare == null && clickedSquare.piece != null)
+            if (originSquare < 0 && clickedSquare.piece != null)
             {
-                fromSquare = chessBoardPanel.Controls.IndexOf(squarePictureBox);
-                oldBoard = board;
-                selectedSquare = clickedSquare;
-                selectedPiece = clickedPiece;
-                board.squares[squarePosition.Y, squarePosition.X].piece = null;
-                chessBoardPanel.Controls[chessBoardPanel.Controls.IndexOf(squarePictureBox)].BackColor = SELECTED_PIECE_COLOR;
+                originSquare = pictureBoxIndex;
+                chessBoardPanel.Controls[pictureBoxIndex].BackColor = SELECTED_PIECE_COLOR;
                 possibleMoves = board.CalculatePossibleMoves(squarePosition);
                 foreach (Point possibleMove in possibleMoves)
                 {
@@ -108,27 +102,31 @@ namespace GrandChess
                 }
             }
 
-            else if (selectedSquare != null)
+            else
             {
-                if (possibleMoves.Contains(XYPosition(chessBoardPanel.Controls.IndexOf(squarePictureBox))))
+                destinationSquare = pictureBoxIndex;
+                if (originSquare >= 0)
                 {
-                    board.squares[squarePosition.Y, squarePosition.X].piece = selectedPiece;
-                    ((PictureBox)chessBoardPanel.Controls[chessBoardPanel.Controls.IndexOf(squarePictureBox)]).Image = selectedPiece.Image;
-                    ((PictureBox)chessBoardPanel.Controls[fromSquare]).Image = null;
-                    
-                    ResetColors();
-                    selectedSquare = null;
-                    selectedPiece = null;
-                }
-                else
-                {
-                    ResetColors();
-                    board = oldBoard;
-                    selectedSquare = null;
-                    selectedPiece = null;
+                    if (possibleMoves.Contains(squarePosition) && destinationSquare != originSquare)
+                    {
+                        Piece selectedPiece = board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece;
+                        board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece = null;
+
+                        board.squares[squarePosition.Y, squarePosition.X].piece = selectedPiece;
+                        ((PictureBox)chessBoardPanel.Controls[destinationSquare]).Image = selectedPiece.Image;
+                        ((PictureBox)chessBoardPanel.Controls[originSquare]).Image = null;
+                        originSquare = -1;
+                        destinationSquare = -1;
+                        ResetColors();
+                    }
+                    else
+                    {
+                        ResetColors();
+                        originSquare = -1;
+                        destinationSquare = -1;
+                    }
                 }
             }
-            
         }
 
         private void ResetColors()

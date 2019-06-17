@@ -17,5 +17,10 @@ namespace GrandChess
         {
             this.piece = piece;
         }
+
+        public Square()
+        {
+            piece = null;
+        }
     }
 }

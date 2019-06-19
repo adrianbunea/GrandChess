@@ -78,7 +78,8 @@ namespace GrandChess
                 Size = new Size(squareSize, squareSize),
                 BackColor = ((row + column) % 2 == 0 ? WHITE_COLOR : BLACK_COLOR),
                 Location = new Point(column * squareSize, row * squareSize),
-            };
+                BorderStyle = BorderStyle.Fixed3D
+        };
             square.Click += SquareClick;
             return square;
         }
@@ -132,6 +133,7 @@ namespace GrandChess
             board.squares[squarePosition.Y, squarePosition.X].piece = selectedPiece;
             ((PictureBox)chessBoardPanel.Controls[destinationSquare]).Image = selectedPiece.Image;
             ((PictureBox)chessBoardPanel.Controls[originSquare]).Image = null;
+
             ResetCoordinates();
             ResetColors();
         }

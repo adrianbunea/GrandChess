@@ -11,7 +11,61 @@ namespace GrandChess.Classes.Pieces
     {
         public override List<Point> MovePattern(Point position)
         {
-            return new List<Point>();
+            List<Point> pattern = new List<Point>();
+
+            //dreapta
+            for (int i = 1; i < 10; i++)
+            {
+                int newX = position.X + i;
+
+                if (newX < 10)
+                {
+                    pattern.Add(new Point(newX, position.Y));
+                }
+
+                else break;
+            }
+
+            //stanga
+            for (int i = 1; i < 10; i++)
+            {
+                int newX = position.X - i;
+
+                if (newX >= 0)
+                {
+                    pattern.Add(new Point(newX, position.Y));
+                }
+
+                else break;
+            }
+
+            //sus
+            for (int i = 1; i < 10; i++)
+            {
+                int newY = position.Y - i;
+
+                if (newY >= 0)
+                {
+                    pattern.Add(new Point(position.X, newY));
+                }
+
+                else break;
+            }
+
+            //jos
+            for (int i = 1; i < 10; i++)
+            {
+                int newY = position.Y + i;
+
+                if (newY < 10)
+                {
+                    pattern.Add(new Point(position.X, newY));
+                }
+
+                else break;
+            }
+
+            return pattern;
         }
 
         public Rook(PieceColor pieceColor, Point position) : base(pieceColor, position)

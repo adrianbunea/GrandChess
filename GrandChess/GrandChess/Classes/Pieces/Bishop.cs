@@ -11,7 +11,65 @@ namespace GrandChess.Classes.Pieces
     {
         public override List<Point> MovePattern(Point position)
         {
-            return new List<Point>();
+            List<Point> pattern = new List<Point>();
+
+            //-45 grade
+            for (int i = 1; i < 10; i++)
+            {
+                int newX = position.X + i;
+                int newY = position.Y + i;
+
+                if (newX < 10 && newY < 10)
+                {
+                    pattern.Add(new Point(newX, newY));
+                }
+
+                else break;
+            }
+
+            //135 grade
+            for (int i = 1; i < 10; i++)
+            {
+                int newX = position.X - i;
+                int newY = position.Y - i;
+
+                if (newX >= 0 && newY >= 0)
+                {
+                    pattern.Add(new Point(newX, newY));
+                }
+
+                else break;
+            }
+
+            //-135 grade
+            for (int i = 1; i < 10; i++)
+            {
+                int newX = position.X - i;
+                int newY = position.Y + i;
+
+                if (newX >=0 && newY < 10)
+                {
+                    pattern.Add(new Point(newX, newY));
+                }
+
+                else break;
+            }
+
+            //45 grade
+            for (int i = 1; i < 10; i++)
+            {
+                int newX = position.X + i;
+                int newY = position.Y - i;
+
+                if (newX < 10 && newY >= 0)
+                {
+                    pattern.Add(new Point(newX, newY));
+                }
+
+                else break;
+            }
+
+            return pattern;
         }
 
         public Bishop(PieceColor pieceColor, Point position) : base(pieceColor, position)

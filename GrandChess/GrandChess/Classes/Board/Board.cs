@@ -24,7 +24,7 @@ namespace GrandChess
                 new Point(5, 4),
                 new Point(5, 3)
             };
-            return possibleMoves;
+            return piecePattern;
         }
         public Board()
         {

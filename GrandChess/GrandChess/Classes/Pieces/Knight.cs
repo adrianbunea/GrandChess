@@ -11,7 +11,35 @@ namespace GrandChess.Classes.Pieces
     {
         public override List<Point> MovePattern(Point position)
         {
-            return new List<Point>();
+            int oldX = position.X;
+            int oldY = position.Y;
+            int newX, newY;
+
+            List<Point> pattern = new List<Point>();
+            List<Point> offsets = new List<Point>
+            {
+                new Point(-1, -2),
+                new Point(-2, -1),
+                new Point( 1, -2),
+                new Point(-2,  1),
+                new Point( 1,  2),
+                new Point( 2,  1),
+                new Point(-1,  2),
+                new Point( 2, -1)
+            };
+
+            foreach(Point offset in offsets)
+            {
+                newX = oldX + offset.X;
+                newY = oldY + offset.Y;
+
+                if (newX >= 0 && newX < 10 && newY >= 0 && newY < 10)
+                {
+                    pattern.Add(new Point(newX, newY));
+                }
+            }
+
+            return pattern;
         }
 
         public Knight(PieceColor pieceColor, Point position) : base(pieceColor, position)

@@ -46,7 +46,7 @@ namespace GrandChess
         private void NewGame(object sender, EventArgs e)
         {
             ResetColors();
-            originSquare = -1;
+            ResetCoordinates();
             List<string> piecesCodifications = ReadInitialSetup();
             PieceFactory pieceFactory = new PieceFactory();
             board = new Board();
@@ -86,47 +86,83 @@ namespace GrandChess
         private void SquareClick(object sender, EventArgs e)
         {
             PictureBox squarePictureBox = sender as PictureBox;
+
             int pictureBoxIndex = chessBoardPanel.Controls.IndexOf(squarePictureBox);
             Point squarePosition = XYPosition(pictureBoxIndex);
-
             Square clickedSquare = board.squares[squarePosition.Y, squarePosition.X];
-            
-            if (originSquare < 0 && clickedSquare.piece != null)
+
+            if (IsSelectingPieceToMove(clickedSquare))
             {
                 originSquare = pictureBoxIndex;
-                chessBoardPanel.Controls[pictureBoxIndex].BackColor = SELECTED_PIECE_COLOR;
+
+                ColorSelectedPiece();
                 possibleMoves = board.CalculatePossibleMoves(squarePosition);
-                foreach (Point possibleMove in possibleMoves)
-                {
-                    chessBoardPanel.Controls[possibleMove.X + possibleMove.Y * 10].BackColor = POSSIBLE_DESTINATION_COLOR;
-                }
+                ColorPossibleMoves();
             }
 
             else
             {
                 destinationSquare = pictureBoxIndex;
-                if (originSquare >= 0)
-                {
-                    if (possibleMoves.Contains(squarePosition) && destinationSquare != originSquare)
-                    {
-                        Piece selectedPiece = board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece;
-                        board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece = null;
 
-                        board.squares[squarePosition.Y, squarePosition.X].piece = selectedPiece;
-                        ((PictureBox)chessBoardPanel.Controls[destinationSquare]).Image = selectedPiece.Image;
-                        ((PictureBox)chessBoardPanel.Controls[originSquare]).Image = null;
-                        originSquare = -1;
-                        destinationSquare = -1;
-                        ResetColors();
+                if (IsSelectingDestination())
+                {
+                    if (IsDestinationValid(squarePosition))
+                    {
+                        MovePiece(squarePosition);
                     }
                     else
                     {
+                        ResetCoordinates();
                         ResetColors();
-                        originSquare = -1;
-                        destinationSquare = -1;
                     }
                 }
             }
+        }
+
+        private bool IsDestinationValid(Point squarePosition)
+        {
+            return possibleMoves.Contains(squarePosition) && destinationSquare != originSquare;
+        }
+
+        private void MovePiece(Point squarePosition)
+        {
+            Piece selectedPiece = board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece;
+            board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece = null;
+
+            board.squares[squarePosition.Y, squarePosition.X].piece = selectedPiece;
+            ((PictureBox)chessBoardPanel.Controls[destinationSquare]).Image = selectedPiece.Image;
+            ((PictureBox)chessBoardPanel.Controls[originSquare]).Image = null;
+            ResetCoordinates();
+            ResetColors();
+        }
+
+        private void ResetCoordinates()
+        {
+            originSquare = -1;
+            destinationSquare = -1;
+        }
+
+        private bool IsSelectingDestination()
+        {
+            return originSquare >= 0;
+        }
+
+        private void ColorSelectedPiece()
+        {
+            chessBoardPanel.Controls[originSquare].BackColor = SELECTED_PIECE_COLOR;
+        }
+
+        private void ColorPossibleMoves()
+        {
+            foreach (Point possibleMove in possibleMoves)
+            {
+                chessBoardPanel.Controls[possibleMove.X + possibleMove.Y * 10].BackColor = POSSIBLE_DESTINATION_COLOR;
+            }
+        }
+
+        private bool IsSelectingPieceToMove(Square clickedSquare)
+        {
+            return originSquare < 0 && clickedSquare.piece != null;
         }
 
         private void ResetColors()

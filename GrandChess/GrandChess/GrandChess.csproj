@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Board\Board.cs" />
+    <Compile Include="Classes\Pieces\Bishop.cs" />
+    <Compile Include="Classes\Pieces\Cardinal.cs" />
+    <Compile Include="Classes\Pieces\King.cs" />
+    <Compile Include="Classes\Pieces\Knight.cs" />
+    <Compile Include="Classes\Pieces\Marshall.cs" />
+    <Compile Include="Classes\Pieces\Pawn.cs" />
+    <Compile Include="Classes\Pieces\Piece.cs" />
+    <Compile Include="Classes\PieceFactory.cs" />
+    <Compile Include="Classes\Pieces\Queen.cs" />
+    <Compile Include="Classes\Pieces\Rook.cs" />
+    <Compile Include="Classes\Board\Square.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

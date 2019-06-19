@@ -11,14 +11,18 @@ namespace GrandChess
     {
         public Square[,] squares;
 
-        public List<Point> CalculatePossibleMoves(Point squarePosition)
+        public List<Point> CalculatePossibleMoves(Point piecePosition)
         {
+            Piece movingPiece = squares[piecePosition.Y, piecePosition.X].piece;
+            List<Point> piecePattern = movingPiece.MovePattern(piecePosition);
+
             List<Point> possibleMoves = new List<Point>
             {
                 new Point(4, 4),
                 new Point(4, 5),
-                new Point(3, 3),
-                new Point(2, 2)
+                new Point(4, 3),
+                new Point(5, 4),
+                new Point(5, 3)
             };
             return possibleMoves;
         }

@@ -9,7 +9,7 @@ namespace GrandChess.Classes.Pieces
 {
     class Pawn : Piece
     {
-        protected override List<Point> PossibleMoves()
+        public override List<Point> MovePattern(Point position)
         {
             return new List<Point>();
         }

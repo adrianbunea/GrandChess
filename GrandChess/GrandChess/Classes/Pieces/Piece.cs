@@ -19,20 +19,20 @@ namespace GrandChess
         protected Point position;
         public Image Image { get; protected set; }
 
-        public void TryMove(Point destination)
-        {
-            if (PossibleMoves().Contains(destination))
-            {
-                Move(destination);
-            }
-        }
-        protected void Move(Point destination)
-        {
-            position.X = destination.X;
-            position.Y = destination.Y;
-        }
+        //public void TryMove(Point destination)
+        //{
+        //    if (PossibleMoves().Contains(destination))
+        //    {
+        //        Move(destination);
+        //    }
+        //}
+        //protected void Move(Point destination)
+        //{
+        //    position.X = destination.X;
+        //    position.Y = destination.Y;
+        //}
 
-        protected abstract List<Point> PossibleMoves();
+        public abstract List<Point> MovePattern(Point position);
 
         public Piece(PieceColor pieceColor, Point position)
         {

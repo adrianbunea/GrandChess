@@ -20,13 +20,15 @@ namespace GrandChess.Classes.Pieces
                 newY = oldY - 1;
                 if (newY >= 0)
                 {
-                    pattern.exceptionPattern.Add(new Point(position.X, newY));
+                    pattern.pawnMovePattern.Add(new Point(position.X, newY));
+                    pattern.pawnAttackPattern.Add(new Point(position.X-1, newY));
+                    pattern.pawnAttackPattern.Add(new Point(position.X+1, newY));
                 }
 
                 if (oldY == 7)
                 {
                     newY = oldY - 2;
-                    pattern.exceptionPattern.Add(new Point(position.X, newY));
+                    pattern.pawnMovePattern.Add(new Point(position.X, newY));
                 }
             }
 
@@ -35,13 +37,15 @@ namespace GrandChess.Classes.Pieces
                 newY = oldY + 1;
                 if (newY < 10)
                 {
-                    pattern.exceptionPattern.Add(new Point(position.X, newY));
+                    pattern.pawnMovePattern.Add(new Point(position.X, newY));
+                    pattern.pawnAttackPattern.Add(new Point(position.X - 1, newY));
+                    pattern.pawnAttackPattern.Add(new Point(position.X + 1, newY));
                 }
 
                 if (oldY == 2)
                 {
                     newY = oldY + 2;
-                    pattern.exceptionPattern.Add(new Point(position.X, newY));
+                    pattern.pawnMovePattern.Add(new Point(position.X, newY));
                 }
             }
 

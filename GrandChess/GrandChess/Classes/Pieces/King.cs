@@ -35,7 +35,7 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newX < 10 && newY >= 0 && newY < 10)
                 {
-                    pattern.exceptionPattern.Add(new Point(newX, newY));
+                    pattern.kingPattern.Add(new Point(newX, newY));
                 }
             }
 

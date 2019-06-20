@@ -11,13 +11,17 @@ namespace GrandChess.Classes.Pieces
     {
         public List<List<Point>> slidingPatterns;
         public List<Point> jumpPattern;
-        public List<Point> exceptionPattern;
+        public List<Point> kingPattern;
+        public List<Point> pawnMovePattern;
+        public List<Point> pawnAttackPattern;
 
         public MovementPattern()
         {
             slidingPatterns = new List<List<Point>>();
             jumpPattern = new List<Point>();
-            exceptionPattern = new List<Point>();
+            kingPattern = new List<Point>();
+            pawnMovePattern = new List<Point>();
+            pawnAttackPattern = new List<Point>();
         }
     }
 }

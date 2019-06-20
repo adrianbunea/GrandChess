@@ -110,6 +110,8 @@ namespace GrandChess
                     if (IsDestinationValid(squarePosition))
                     {
                         MovePiece(squarePosition);
+                        ResetCoordinates();
+                        ResetColors();
                     }
                     else
                     {
@@ -128,14 +130,12 @@ namespace GrandChess
         private void MovePiece(Point squarePosition)
         {
             Piece selectedPiece = board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece;
+
             board.squares[XYPosition(originSquare).Y, XYPosition(originSquare).X].piece = null;
-
             board.squares[squarePosition.Y, squarePosition.X].piece = selectedPiece;
-            ((PictureBox)chessBoardPanel.Controls[destinationSquare]).Image = selectedPiece.Image;
-            ((PictureBox)chessBoardPanel.Controls[originSquare]).Image = null;
 
-            ResetCoordinates();
-            ResetColors();
+            ((PictureBox)chessBoardPanel.Controls[originSquare]).Image = null;
+            ((PictureBox)chessBoardPanel.Controls[destinationSquare]).Image = selectedPiece.Image;
         }
 
         private void ResetCoordinates()

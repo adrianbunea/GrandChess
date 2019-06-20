@@ -9,9 +9,9 @@ namespace GrandChess.Classes.Pieces
 {
     class Pawn : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
-            List<Point> pattern = new List<Point>();
+            MovementPattern pattern = new MovementPattern();
             int oldY = position.Y;
             int newY;
 
@@ -20,13 +20,13 @@ namespace GrandChess.Classes.Pieces
                 newY = oldY - 1;
                 if (newY >= 0)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    pattern.exceptionPattern.Add(new Point(position.X, newY));
                 }
 
                 if (oldY == 7)
                 {
                     newY = oldY - 2;
-                    pattern.Add(new Point(position.X, newY));
+                    pattern.exceptionPattern.Add(new Point(position.X, newY));
                 }
             }
 
@@ -35,13 +35,13 @@ namespace GrandChess.Classes.Pieces
                 newY = oldY + 1;
                 if (newY < 10)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    pattern.exceptionPattern.Add(new Point(position.X, newY));
                 }
 
                 if (oldY == 2)
                 {
                     newY = oldY + 2;
-                    pattern.Add(new Point(position.X, newY));
+                    pattern.exceptionPattern.Add(new Point(position.X, newY));
                 }
             }
 

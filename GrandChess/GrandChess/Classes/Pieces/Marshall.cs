@@ -9,9 +9,10 @@ namespace GrandChess.Classes.Pieces
 {
     class Marshall : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
-            List<Point> pattern = new List<Point>();
+            MovementPattern pattern = new MovementPattern();
+            List<Point> jumps = new List<Point>();
             List<Point> offsets = new List<Point>
             {
                 new Point(-1, -2),
@@ -28,8 +29,6 @@ namespace GrandChess.Classes.Pieces
             int oldY = position.Y;
             int newX, newY;
 
-            
-
             foreach (Point offset in offsets)
             {
                 newX = oldX + offset.X;
@@ -37,9 +36,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newX < 10 && newY >= 0 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    jumps.Add(new Point(newX, newY));
                 }
             }
+            pattern.jumpPattern = jumps;
+
+            List<Point> line = new List<Point>();
 
             //dreapta
             for (int i = 1; i < 10; i++)
@@ -48,11 +50,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10)
                 {
-                    pattern.Add(new Point(newX, position.Y));
+                    line.Add(new Point(newX, position.Y));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //stanga
             for (int i = 1; i < 10; i++)
@@ -61,11 +65,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0)
                 {
-                    pattern.Add(new Point(newX, position.Y));
+                    line.Add(new Point(newX, position.Y));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //sus
             for (int i = 1; i < 10; i++)
@@ -74,11 +80,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newY >= 0)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    line.Add(new Point(position.X, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //jos
             for (int i = 1; i < 10; i++)
@@ -87,12 +95,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newY < 10)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    line.Add(new Point(position.X, newY));
                 }
 
                 else break;
             }
-
+            pattern.slidingPatterns.Add(line);
             return pattern;
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using GrandChess.Classes.Pieces;
 
 namespace GrandChess
 {
@@ -14,17 +15,25 @@ namespace GrandChess
         public List<Point> CalculatePossibleMoves(Point piecePosition)
         {
             Piece movingPiece = squares[piecePosition.Y, piecePosition.X].piece;
-            List<Point> piecePattern = movingPiece.MovePattern(piecePosition);
+            MovementPattern piecePattern = movingPiece.MovePattern(piecePosition);
+            List<Point> possibleMoves = new List<Point>();
 
-            List<Point> possibleMoves = new List<Point>
+            foreach (List<Point> slidingPath in piecePattern.slidingPatterns)
             {
-                new Point(4, 4),
-                new Point(4, 5),
-                new Point(4, 3),
-                new Point(5, 4),
-                new Point(5, 3)
-            };
-            return piecePattern;
+                possibleMoves.AddRange(slidingPath);
+            }
+
+            foreach (Point jump in piecePattern.jumpPattern)
+            {
+                possibleMoves.Add(jump);
+            }
+
+            foreach (Point move in piecePattern.exceptionPattern)
+            {
+                possibleMoves.Add(move);
+            }
+
+            return possibleMoves;
         }
         public Board()
         {

@@ -9,9 +9,10 @@ namespace GrandChess.Classes.Pieces
 {
     class Rook : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
-            List<Point> pattern = new List<Point>();
+            MovementPattern pattern = new MovementPattern();
+            List<Point> line = new List<Point>();
 
             //dreapta
             for (int i = 1; i < 10; i++)
@@ -20,11 +21,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10)
                 {
-                    pattern.Add(new Point(newX, position.Y));
+                    line.Add(new Point(newX, position.Y));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //stanga
             for (int i = 1; i < 10; i++)
@@ -33,11 +36,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0)
                 {
-                    pattern.Add(new Point(newX, position.Y));
+                    line.Add(new Point(newX, position.Y));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //sus
             for (int i = 1; i < 10; i++)
@@ -46,11 +51,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newY >= 0)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    line.Add(new Point(position.X, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //jos
             for (int i = 1; i < 10; i++)
@@ -59,12 +66,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newY < 10)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    line.Add(new Point(position.X, newY));
                 }
 
                 else break;
             }
-
+            pattern.slidingPatterns.Add(line);
             return pattern;
         }
 

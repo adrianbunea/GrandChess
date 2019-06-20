@@ -9,13 +9,14 @@ namespace GrandChess.Classes.Pieces
 {
     class Cardinal : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
+            MovementPattern pattern = new MovementPattern();
             int oldX = position.X;
             int oldY = position.Y;
             int newX, newY;
 
-            List<Point> pattern = new List<Point>();
+            List<Point> jumps = new List<Point>();
             List<Point> offsets = new List<Point>
             {
                 new Point(-1, -2),
@@ -35,9 +36,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newX < 10 && newY >= 0 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    jumps.Add(new Point(newX, newY));
                 }
             }
+            pattern.jumpPattern = jumps;
+
+            List<Point> diagonal = new List<Point>();
 
             //-45 grade
             for (int i = 1; i < 10; i++)
@@ -47,11 +51,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //135 grade
             for (int i = 1; i < 10; i++)
@@ -61,11 +67,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newY >= 0)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //-135 grade
             for (int i = 1; i < 10; i++)
@@ -75,11 +83,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //45 grade
             for (int i = 1; i < 10; i++)
@@ -89,11 +99,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10 && newY >= 0)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
 
             return pattern;
         }

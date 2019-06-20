@@ -9,13 +9,13 @@ namespace GrandChess.Classes.Pieces
 {
     class King : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
             int oldX = position.X;
             int oldY = position.Y;
             int newX, newY;
 
-            List<Point> pattern = new List<Point>();
+            MovementPattern pattern = new MovementPattern();
             List<Point> offsets = new List<Point>
             {
                 new Point(-1, -1),
@@ -35,7 +35,7 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newX < 10 && newY >= 0 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    pattern.exceptionPattern.Add(new Point(newX, newY));
                 }
             }
 

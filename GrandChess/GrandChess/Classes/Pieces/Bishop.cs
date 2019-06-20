@@ -9,9 +9,10 @@ namespace GrandChess.Classes.Pieces
 {
     class Bishop : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
-            List<Point> pattern = new List<Point>();
+            MovementPattern pattern = new MovementPattern();
+            List<Point> diagonal = new List<Point>();
 
             //-45 grade
             for (int i = 1; i < 10; i++)
@@ -21,11 +22,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //135 grade
             for (int i = 1; i < 10; i++)
@@ -35,11 +38,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newY >= 0)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //-135 grade
             for (int i = 1; i < 10; i++)
@@ -49,11 +54,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >=0 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //45 grade
             for (int i = 1; i < 10; i++)
@@ -63,11 +70,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10 && newY >= 0)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
 
             return pattern;
         }

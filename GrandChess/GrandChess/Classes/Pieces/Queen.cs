@@ -9,9 +9,10 @@ namespace GrandChess.Classes.Pieces
 {
     class Queen : Piece
     {
-        public override List<Point> MovePattern(Point position)
+        public override MovementPattern MovePattern(Point position)
         {
-            List<Point> pattern = new List<Point>();
+            MovementPattern pattern = new MovementPattern();
+            List<Point> line = new List<Point>();
 
             //dreapta
             for (int i = 1; i < 10; i++)
@@ -20,11 +21,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10)
                 {
-                    pattern.Add(new Point(newX, position.Y));
+                    line.Add(new Point(newX, position.Y));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //stanga
             for (int i = 1; i < 10; i++)
@@ -33,11 +36,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0)
                 {
-                    pattern.Add(new Point(newX, position.Y));
+                    line.Add(new Point(newX, position.Y));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //sus
             for (int i = 1; i < 10; i++)
@@ -46,11 +51,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newY >= 0)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    line.Add(new Point(position.X, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
+            line = new List<Point>();
 
             //jos
             for (int i = 1; i < 10; i++)
@@ -59,12 +66,16 @@ namespace GrandChess.Classes.Pieces
 
                 if (newY < 10)
                 {
-                    pattern.Add(new Point(position.X, newY));
+                    line.Add(new Point(position.X, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(line);
 
+            List<Point> diagonal = new List<Point>();
+
+            //-45 grade
             for (int i = 1; i < 10; i++)
             {
                 int newX = position.X + i;
@@ -72,11 +83,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //135 grade
             for (int i = 1; i < 10; i++)
@@ -86,11 +99,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newY >= 0)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //-135 grade
             for (int i = 1; i < 10; i++)
@@ -100,11 +115,13 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX >= 0 && newY < 10)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
+            diagonal = new List<Point>();
 
             //45 grade
             for (int i = 1; i < 10; i++)
@@ -114,11 +131,12 @@ namespace GrandChess.Classes.Pieces
 
                 if (newX < 10 && newY >= 0)
                 {
-                    pattern.Add(new Point(newX, newY));
+                    diagonal.Add(new Point(newX, newY));
                 }
 
                 else break;
             }
+            pattern.slidingPatterns.Add(diagonal);
 
             return pattern;
         }

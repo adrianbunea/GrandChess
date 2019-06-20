@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Board\Board.cs" />
+    <Compile Include="Classes\MovementPattern.cs" />
     <Compile Include="Classes\Pieces\Bishop.cs" />
     <Compile Include="Classes\Pieces\Cardinal.cs" />
     <Compile Include="Classes\Pieces\King.cs" />

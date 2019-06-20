@@ -11,7 +11,7 @@ public enum PieceColor
     Black = 1
 }
 
-namespace GrandChess
+namespace GrandChess.Classes.Pieces
 {
     abstract class Piece
     {
@@ -32,7 +32,7 @@ namespace GrandChess
         //    position.Y = destination.Y;
         //}
 
-        public abstract List<Point> MovePattern(Point position);
+        public abstract  MovementPattern MovePattern(Point position);
 
         public Piece(PieceColor pieceColor, Point position)
         {

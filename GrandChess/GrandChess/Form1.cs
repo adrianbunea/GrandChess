@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GrandChess.Classes;
 using GrandChess.Classes.Pieces;
@@ -48,6 +43,8 @@ namespace GrandChess
         {
             ResetColors();
             ResetCoordinates();
+            ResetPieceImages();
+
             List<string> piecesCodifications = ReadInitialSetup();
             PieceFactory pieceFactory = new PieceFactory();
             board = new Board();
@@ -65,6 +62,14 @@ namespace GrandChess
                         ((PictureBox)chessBoardPanel.Controls[y * 10 + x]).Image = board.squares[y, x].piece.Image;
                     }
                 }
+            }
+        }
+
+        private void ResetPieceImages()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                ((PictureBox)chessBoardPanel.Controls[i]).Image = null;
             }
         }
 

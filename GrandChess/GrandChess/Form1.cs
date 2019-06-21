@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Timers;
 using System.Windows.Forms;
 using GrandChess.Classes;
 using GrandChess.Classes.Pieces;
@@ -27,6 +28,7 @@ namespace GrandChess
         {
             InitializeComponent();
             CreateBoard();
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void CreateBoard()
@@ -47,6 +49,7 @@ namespace GrandChess
             ResetPieceImages();
 
             playerTurn = PieceColor.White;
+            lblTurn.Text = playerTurn.ToString() + " Turn";
 
             List<string> piecesCodifications = ReadInitialSetup();
             PieceFactory pieceFactory = new PieceFactory();
@@ -66,6 +69,7 @@ namespace GrandChess
                     }
                 }
             }
+            //AiTimer();
         }
 
         private void ResetPieceImages()
@@ -132,9 +136,59 @@ namespace GrandChess
             }
         }
 
+        /*private void AiTimer() {
+
+            System.Timers.Timer aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(CheckAiTurn);
+            aTimer.Interval = 10;
+            aTimer.Enabled = true;
+
+            
+        }*/
+
+        /*private void CheckAiTurn(object source, ElapsedEventArgs e)
+        {
+            Random rand = new Random();
+            if ((int)playerTurn == 1)
+            {
+                int pictureBoxIndex =rand.Next(99);
+                Point squarePosition = XYPosition(pictureBoxIndex);
+                Square clickedSquare = board.squares[squarePosition.Y, squarePosition.X];
+
+                if (IsSelectingPieceToMove(clickedSquare) && clickedSquare.piece.pieceColor == playerTurn)
+                {
+                    originSquare = pictureBoxIndex;
+                    ColorSelectedPiece();
+                    possibleMoves = board.CalculatePossibleMoves(squarePosition);
+                    ColorPossibleMoves();
+                }
+                else
+                {
+                    destinationSquare = pictureBoxIndex;
+
+                    if (IsSelectingDestination())
+                    {
+                        if (IsDestinationValid(squarePosition))
+                        {
+                            MovePiece(squarePosition);
+                            SwitchTurn();
+                            ResetCoordinates();
+                            ResetColors();
+                        }
+                        else
+                        {
+                            ResetCoordinates();
+                            ResetColors();
+                        }
+                    }
+                }
+            }
+        }*/
+
         private void SwitchTurn()
         {
             playerTurn = (PieceColor)(((int)playerTurn + 1) % 2);
+            lblTurn.Text = playerTurn.ToString() + " Turn";
         }
 
         private bool IsDestinationValid(Point squarePosition)

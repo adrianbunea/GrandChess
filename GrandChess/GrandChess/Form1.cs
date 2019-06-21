@@ -119,7 +119,7 @@ namespace GrandChess
                     if (IsDestinationValid(squarePosition))
                     {
                         MovePiece(squarePosition);
-                        playerTurn = (PieceColor)(((int)playerTurn + 1)%2);
+                        SwitchTurn();
                         ResetCoordinates();
                         ResetColors();
                     }
@@ -130,6 +130,11 @@ namespace GrandChess
                     }
                 }
             }
+        }
+
+        private void SwitchTurn()
+        {
+            playerTurn = (PieceColor)(((int)playerTurn + 1) % 2);
         }
 
         private bool IsDestinationValid(Point squarePosition)

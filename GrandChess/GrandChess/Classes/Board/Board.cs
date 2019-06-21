@@ -105,10 +105,11 @@ namespace GrandChess
             {
                 foreach (Point move in piecePattern.pawnMovePattern)
                 {
-                    if (squares[move.Y, move.X].piece == null)
+                    if (squares[move.Y, move.X].piece != null)
                     {
-                        possibleMoves.Add(move);
+                        break;
                     }
+                    possibleMoves.Add(move);
                 }
 
                 foreach (Point move in piecePattern.pawnAttackPattern)

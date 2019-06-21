@@ -11,6 +11,7 @@ namespace GrandChess
     public partial class MainWindow : Form
     {
         Board board;
+        PieceColor playerTurn;
 
         int originSquare = -1;
         int destinationSquare = -1;
@@ -44,6 +45,8 @@ namespace GrandChess
             ResetColors();
             ResetCoordinates();
             ResetPieceImages();
+
+            playerTurn = PieceColor.White;
 
             List<string> piecesCodifications = ReadInitialSetup();
             PieceFactory pieceFactory = new PieceFactory();
@@ -98,7 +101,7 @@ namespace GrandChess
             Point squarePosition = XYPosition(pictureBoxIndex);
             Square clickedSquare = board.squares[squarePosition.Y, squarePosition.X];
 
-            if (IsSelectingPieceToMove(clickedSquare))
+            if (IsSelectingPieceToMove(clickedSquare) && clickedSquare.piece.pieceColor == playerTurn)
             {
                 originSquare = pictureBoxIndex;
 
@@ -116,6 +119,7 @@ namespace GrandChess
                     if (IsDestinationValid(squarePosition))
                     {
                         MovePiece(squarePosition);
+                        playerTurn = (PieceColor)(((int)playerTurn + 1)%2);
                         ResetCoordinates();
                         ResetColors();
                     }

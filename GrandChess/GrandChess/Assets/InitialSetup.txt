@@ -1,0 +1,10 @@
+﻿ br, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , br
+ 0 ,bkn, bb, bq, bk, bm, bc, bb,bkn, 0 
+ bp, bp, bp, bp, bp, bp, bp, bp, bp, bp
+ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 
+ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 
+ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 
+ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 
+ wp, wp, wp, wp, wp, wp, wp, wp, wp, wp
+ 0 ,wkn, wb, wq, wk, wm, wc, wb,wkn, 0 
+ wr, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , wr
